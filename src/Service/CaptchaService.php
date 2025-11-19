@@ -280,7 +280,6 @@ class CaptchaService
                 $this->logger->error('Captcha Service setProperties Font file NOT found '.$objFile->path);
             }
         }
-        if ($this->debug) $this->logger->info('CaptchaService: setProperties2 tc_font '.$this->captchaFont);
     }
 
     protected function deleteOldEntries(): void
