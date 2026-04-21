@@ -25,10 +25,6 @@ class CaptchaWidget extends Widget
 
         $this->config = Config::getInstance();
         $this->captchaService = System::getContainer()->get(CaptchaService::class);
-
-        $this->captchaService->createCaptcha();
-        $this->arrConfiguration['captcha_hash'] = $this->captchaService->getHash();
-        $this->arrConfiguration['captcha_image'] = $this->captchaService->getImageName();
     }
 
     public function parse($attributes = null): string
@@ -54,6 +50,10 @@ public function generate(): string
         return $template->parse();
     }
 
+        $this->captchaService->createCaptcha();
+
+        $GLOBALS['TL_CSS']['tossn_captcha'] = 'bundles/contaocaptcha/css/tossn-captcha.css|static';
+
     // Fehlerbehandlung
     $hasErrors = $this->hasErrors();
     $errorMessage = $hasErrors ? $this->getErrorAsString() : '';
@@ -64,7 +64,7 @@ public function generate(): string
 $template->type = $this->type;
 $template->addSubmit = $this->addSubmit ?? false;
 $template->slabel = $this->slabel ?? 'Absenden';
-    
+
     $template->id = $this->id;
     $template->name = $this->strName;
     $template->label = $this->label;
@@ -72,8 +72,8 @@ $template->slabel = $this->slabel ?? 'Absenden';
     $template->value = $this->value;
     $template->mandatory = $this->mandatory;
     $template->attributes = $this->getAttributes();
-    $template->captcha_hash = $this->arrConfiguration['captcha_hash'];
-    $template->captcha_image = '/' . ltrim((string) $this->arrConfiguration['captcha_image'], '/');
+        $template->captcha_hash = $this->captchaService->getHash();
+        $template->captcha_image = '/' . ltrim((string) $this->captchaService->getImageName(), '/');
     $template->hasErrors = $hasErrors;
     $template->error = $errorMessage;
     $template->errorClass = $errorClass;
