@@ -21,7 +21,7 @@ class CaptchaWidget extends Widget
     private Config $config;
     private RequestStack $requestStack;
 
-    public function __construct(array $arrAttributes = null)
+    public function __construct(array|null $arrAttributes = null)
     {
         parent::__construct($arrAttributes);
 
