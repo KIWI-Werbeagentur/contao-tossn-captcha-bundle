@@ -129,6 +129,11 @@ class CaptchaService
         $query = 'SELECT text FROM tl_tossn_captcha WHERE hash = ? ';
         $data = $this->database->prepare($query)->execute($hash)->fetchAssoc();
 
+        // One-shot: consume the entry regardless of outcome so it cannot be reused.
+        if (isset($data['text'])) {
+            $this->consume($hash);
+        }
+
         if ('alpha' !== $this->charPool && 'numalpha' !== $this->charPool) {
             if (isset($data['text'])) {
                 $data['text'] = strtolower($data['text']);
@@ -143,6 +148,19 @@ class CaptchaService
         }
 
         return false;
+    }
+
+    /**
+     * Remove the captcha entry and its image file so the hash cannot be replayed.
+     */
+    protected function consume(string $hash): void
+    {
+        $this->database->prepare('DELETE FROM tl_tossn_captcha WHERE hash = ?')->execute($hash);
+
+        $fi = $this->captchaImagePath.$hash.'.png';
+        if (is_file($fi)) {
+            @unlink($fi);
+        }
     }
 
     public function createCaptcha(): void
