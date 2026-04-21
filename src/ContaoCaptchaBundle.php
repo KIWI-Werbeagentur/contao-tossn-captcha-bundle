@@ -35,7 +35,7 @@ class ContaoCaptchaBundle extends Bundle
 {
     public function getPath(): string
     {
-        // Wichtig: Nur so l‰dt Contao src/Resources automatisch!
+        // Wichtig: Nur so l√§dt Contao src/Resources automatisch!
         return \dirname(__DIR__);
     }
 }

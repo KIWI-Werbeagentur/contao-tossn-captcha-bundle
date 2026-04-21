@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * DCA für das Formularfeld "tossnCaptcha"
+ * DCA fÃ¼r das Formularfeld "tossnCaptcha"
  */
 
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['tossnCaptcha'] = '

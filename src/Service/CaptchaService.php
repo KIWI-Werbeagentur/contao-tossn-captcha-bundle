@@ -292,7 +292,7 @@ class CaptchaService
                 $fi = $this->captchaImagePath.$data['hash'].'.png';
                 //if ($this->debug) $this->logger->debug("PBD .. Captcha Service deleteOldEntries File $fi captchaImagePath ".$this->captchaImagePath);
                 //\System::log('PBD .. Captcha Service deleteOldEntries delete File '.$fi, __METHOD__, 'TL_GENERAL');
-                // Prüfen ob es eine Datei ist – nicht nur ob etwas existiert
+                // PrÃ¼fen ob es eine Datei ist Â– nicht nur ob etwas existiert
                 if (is_file($fi)) {
                     if (!unlink($fi) && $this->debug) { $this->logger->debug("PBD .. Captcha Service deleteOldEntries unlink failed: $fi"); }
                 } else {

@@ -87,7 +87,7 @@ protected function validator($varInput): bool
 
     if (!$this->captchaService->checkCode(Input::post($this->strName . '_hash'), $varInput)) {
         $this->addError($GLOBALS['TL_LANG']['tossn_captcha']['error']);
-        $this->value = ''; // Eingabe explizit löschen
+        $this->value = ''; // Eingabe explizit lÃ¶schen
         return false; // Validierung fehlgeschlagen
     }
 
