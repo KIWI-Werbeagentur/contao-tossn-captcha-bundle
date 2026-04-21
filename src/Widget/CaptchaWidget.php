@@ -81,17 +81,15 @@ $template->slabel = $this->slabel ?? 'Absenden';
 
     return $template->parse();
 }
-protected function validator($varInput): bool
+protected function validator($varInput)
 {
-    $isValid = parent::validator($varInput); // wichtig: zuerst den Standard-Validator durchlaufen
+    $varInput = parent::validator($varInput);
 
     if (!$this->captchaService->checkCode(Input::post($this->strName . '_hash'), $varInput)) {
         $this->addError($GLOBALS['TL_LANG']['tossn_captcha']['error']);
-        $this->value = ''; // Eingabe explizit löschen
-        return false; // Validierung fehlgeschlagen
     }
 
-    return $isValid;
+    return $varInput;
 }
 
 }
