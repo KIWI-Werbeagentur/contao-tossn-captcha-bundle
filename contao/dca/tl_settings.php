@@ -1,6 +1,15 @@
 <?php
 
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{tossn_captcha_legend},tc_captchaimage,tc_length,tc_fontsize,tc_chars,tc_bgimage,tc_font';
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+
+PaletteManipulator::create()
+    ->addLegend('tossn_captcha_legend', null, PaletteManipulator::POSITION_APPEND)
+    ->addField(
+        ['tc_captchaimage', 'tc_length', 'tc_fontsize', 'tc_chars', 'tc_bgimage', 'tc_font'],
+        'tossn_captcha_legend',
+        PaletteManipulator::POSITION_APPEND
+    )
+    ->applyToPalette('default', 'tl_settings');
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['tc_captchaimage'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_settings']['tc_captchaimage'],
