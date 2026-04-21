@@ -45,7 +45,8 @@ class CaptchaWidget extends Widget
 public function generate(): string
 {
     // Backend: Wildcard anzeigen
-    if (\defined('BE_USER_LOGGED_IN') && BE_USER_LOGGED_IN === true) {
+    $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+    if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
         $template = new \Contao\BackendTemplate('be_wildcard');
         $template->wildcard = '### TOSSN CAPTCHA ###';
         $template->title = $this->name ?: 'TOSSN Captcha';
