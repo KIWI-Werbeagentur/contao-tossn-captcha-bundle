@@ -259,12 +259,11 @@ class CaptchaService
         if ($this->config->get('tc_bgimage') && '' !== $this->config->get('tc_bgimage')) {
             if ($this->debug) $this->logger->info('CaptchaService: setProperties tc_bgimage '.(string)$this->config->get('tc_bgimage'));
             $objFile = FilesModel::findByPk((string) $this->config->get('tc_bgimage'));
-            if ($this->debug) $this->logger->info('CaptchaService: setProperties  Path to tc_bgimage '.$objFile->path);
             if ($objFile && is_file($this->rootDir.$objFile->path)) {
                 if ($this->debug) $this->logger->info('CaptchaService: setProperties  found '.$objFile->path);
                 $this->VendorbackgroundImage = $objFile->path;
             } else {
-                $this->logger->error('Captcha Service setProperties background file NOT found '.$objFile->path);
+                $this->logger->error('Captcha Service setProperties background file NOT found '.($objFile->path ?? '(unknown)'));
             }
         }
         if ($this->debug) $this->logger->info('CaptchaService: setProperties2 VendorbackgroundImage '.$this->VendorbackgroundImage);
@@ -272,12 +271,11 @@ class CaptchaService
         if ($this->config->get('tc_font') && '' !== $this->config->get('tc_font')) {
             if ($this->debug) $this->logger->info('CaptchaService: setProperties tc_font '.(string)$this->config->get('tc_font'));
             $objFile = FilesModel::findByPk((string) $this->config->get('tc_font'));
-            if ($this->debug) $this->logger->info('CaptchaService: setProperties  Path to tc_font '.$objFile->path);
             if ($objFile && is_file($this->rootDir.$objFile->path)) {
                 if ($this->debug) $this->logger->info('CaptchaService: setProperties  found tc_font '.$objFile->path);
                 $this->VendorcaptchaFont = $objFile->path;
             } else {
-                $this->logger->error('Captcha Service setProperties Font file NOT found '.$objFile->path);
+                $this->logger->error('Captcha Service setProperties Font file NOT found '.($objFile->path ?? '(unknown)'));
             }
         }
     }
