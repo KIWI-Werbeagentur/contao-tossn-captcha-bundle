@@ -275,7 +275,7 @@ class CaptchaService
             if ($this->debug) $this->logger->info('CaptchaService: setProperties  Path to tc_font '.$objFile->path);
             if ($objFile && is_file($this->rootDir.$objFile->path)) {
                 if ($this->debug) $this->logger->info('CaptchaService: setProperties  found tc_font '.$objFile->path);
-                $this->captchaFont = $objFile->path;
+                $this->VendorcaptchaFont = $objFile->path;
             } else {
                 $this->logger->error('Captcha Service setProperties Font file NOT found '.$objFile->path);
             }
