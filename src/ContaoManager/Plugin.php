@@ -37,7 +37,7 @@ use PBDKN\ContaoCaptchaBundle\ContaoCaptchaBundle;
 
 class Plugin implements BundlePluginInterface
 {
-    public function getBundles(ParserInterface $parser)
+    public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(ContaoCaptchaBundle::class)
