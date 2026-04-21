@@ -18,10 +18,6 @@ class CaptchaService
 
     private Config $config;
     private Database $database;
-    /**
-     * @var \Database
-     */
-    protected $Database;
 
 
     /**
@@ -96,7 +92,6 @@ class CaptchaService
      * @var string
      */
     protected $VendorcaptchaFont = '';
-    protected $files_url = '';
     private LoggerInterface $logger;
     private bool $debug = false;
 

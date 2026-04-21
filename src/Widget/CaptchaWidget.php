@@ -2,13 +2,10 @@
 
 namespace PBDKN\ContaoCaptchaBundle\Widget;
 
-use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Input;
-use Contao\Widget;
 use Contao\System;
-use Contao\CoreBundle\Routing\ScopeMatcher;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Contao\Widget;
 
 use PBDKN\ContaoCaptchaBundle\Service\CaptchaService;
 
@@ -19,7 +16,6 @@ class CaptchaWidget extends Widget
 
     private CaptchaService $captchaService;
     private Config $config;
-    private RequestStack $requestStack;
 
     public function __construct(array|null $arrAttributes = null)
     {
