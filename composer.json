@@ -21,11 +21,8 @@
     "source": "https://github.com/contao-tossncaptcha-bundle"
   },
   "require": {
-    "php": "^7.2|^8.0",
-    "contao/core-bundle": "^5.0",
-    "symfony/config": "^4.4|^5.4|^6.0|^7.0",
-    "symfony/dependency-injection": "^4.4|^5.4|^6.0|^7.0",
-    "symfony/http-kernel": "^4.4|^5.4|^6.0|^7.0"
+    "php": "^8.2",
+    "contao/core-bundle": "^5.3",
   },
   "conflict": {
     "contao/manager-plugin": "<2.0 || >=3.0"
