@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace PBDKN\ContaoCaptchaBundle\Widget;
 
+use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\System;
 use Contao\Widget;
@@ -36,59 +38,53 @@ class CaptchaWidget extends Widget
         return $this->generate();
     }
 
-public function generate(): string
-{
-    // Backend: Wildcard anzeigen
-    $request = System::getContainer()->get('request_stack')->getCurrentRequest();
-    if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
-        $template = new \Contao\BackendTemplate('be_wildcard');
-        $template->wildcard = '### TOSSN CAPTCHA ###';
-        $template->title = $this->name ?: 'TOSSN Captcha';
-        $template->id = $this->id;
-        $template->link = $this->name;
-        $template->href = 'contao?do=form&table=tl_form_field&id=' . $this->id;
-        return $template->parse();
-    }
+    public function generate(): string
+    {
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
+            $template = new BackendTemplate('be_wildcard');
+            $template->wildcard = '### TOSSN CAPTCHA ###';
+            $template->title = $this->name ?: 'TOSSN Captcha';
+            $template->id = $this->id;
+            $template->link = $this->name;
+            $template->href = 'contao?do=form&table=tl_form_field&id=' . $this->id;
+
+            return $template->parse();
+        }
 
         $this->captchaService->createCaptcha();
 
         $GLOBALS['TL_CSS']['tossn_captcha'] = 'bundles/contaocaptcha/css/tossn-captcha.css|static';
 
     // Fehlerbehandlung
-    $hasErrors = $this->hasErrors();
-    $errorMessage = $hasErrors ? $this->getErrorAsString() : '';
-    $errorClass = $hasErrors ? ' has-error' : '';
+        $hasErrors = $this->hasErrors();
 
-    // Template manuell erzeugen
-    $template = new \Contao\FrontendTemplate('form_tossn_captcha');
-$template->type = $this->type;
-$template->addSubmit = $this->addSubmit ?? false;
-$template->slabel = $this->slabel ?? 'Absenden';
-
-    $template->id = $this->id;
-    $template->name = $this->strName;
-    $template->label = $this->label;
-    $template->class = trim('widget captcha-widget ' . $this->strClass);
+        $template = new FrontendTemplate('form_tossn_captcha');
+        $template->id = $this->id;
+        $template->name = $this->strName;
+        $template->label = $this->label;
+        $template->class = trim('widget captcha-widget ' . $this->strClass);
         $template->value = '';
-    $template->mandatory = $this->mandatory;
-    $template->attributes = $this->getAttributes();
+        $template->mandatory = $this->mandatory;
+        $template->attributes = $this->getAttributes();
         $template->captcha_hash = $this->captchaService->getHash();
         $template->captcha_image = '/' . ltrim((string) $this->captchaService->getImageName(), '/');
-    $template->hasErrors = $hasErrors;
-    $template->error = $errorMessage;
-    $template->errorClass = $errorClass;
+        $template->hasErrors = $hasErrors;
+        $template->error = $hasErrors ? $this->getErrorAsString() : '';
+        $template->errorClass = $hasErrors ? ' has-error' : '';
 
-    return $template->parse();
-}
-protected function validator($varInput)
-{
-    $varInput = parent::validator($varInput);
-
-    if (!$this->captchaService->checkCode(Input::post($this->strName . '_hash'), $varInput)) {
-        $this->addError($GLOBALS['TL_LANG']['tossn_captcha']['error']);
+        return $template->parse();
     }
 
-    return $varInput;
-}
+    protected function validator($varInput)
+    {
+        $varInput = parent::validator($varInput);
 
+        if (!$this->captchaService->checkCode(Input::post($this->strName . '_hash'), $varInput)) {
+            $this->addError($GLOBALS['TL_LANG']['tossn_captcha']['error']);
+        }
+
+        return $varInput;
+    }
 }
